@@ -4,6 +4,7 @@ help="  Script for local deployment
 Available commands:
 ${LBLUE}start${NC} - run the project
 ${LBLUE}stop${NC} - stop all project's containers
+${LBLUE}composer${NC} - run composer commands
 "
 
 action=$1
@@ -18,6 +19,9 @@ case "$action" in
     eval "docker-compose up -d" ;;
   stop )
     eval "docker-compose stop" ;;
+ composer )
+    shift
+    eval "docker exec -it lact_phpfpm_1 php composer.phar ${@}" ;;
   * )
     echo "${help}" ;;
 esac
