@@ -1,0 +1,51 @@
+version: "3"
+
+volumes:
+  postgres-data:
+    driver: local
+
+services:
+  db:
+    image: postgres:12.5-alpine
+    container_name: lact_db_1
+    ports:
+      - "5442:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - /tmp:/tmp
+    shm_size: 1g
+    environment:
+      POSTGRES_DB: lact-db
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: lact_nginx_1
+    depends_on:
+      - phpfpm
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-available:/etc/nginx/sites-available:ro
+      - ../:/app:ro,cached
+    ports:
+      - 8000:80
+
+  phpfpm:
+    image: php:8.1.1-fpm-alpine
+    container_name: lact_phpfpm_1
+    depends_on:
+      - db
+    env_file:
+      - ../.env
+    volumes:
+      - ../:/app
+      - ../vendor:/app/vendor:cached
+    working_dir: /app
+    user: $UID:$GID
+    environment:
+      - "DB_PORT=5432"
+      - "DB_HOST=db"
+      - "DB_USERNAME=postgres"
+      - "DB_DATABASE=main-db"
+      - "COMPOSER_MEMORY_LIMIT=-1"
