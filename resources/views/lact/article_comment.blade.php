@@ -34,12 +34,21 @@
             .errors:empty {
                 display: none;
             }
+            .success {
+                color: green;
+                padding: 10px;
+            }
+            .success:empty {
+                display: none;
+            }
         </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="errors mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                <div id="errors" class="errors mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     @if($errors)
                     <ul>
                         @foreach($errors as $error)
@@ -48,6 +57,8 @@
                     </ul>
                     @endif
                 </div>
+
+                <div id="success" class="success mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg "></div>
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">
@@ -78,13 +89,16 @@
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
 
-                                    <form id="article_comment_form" role="form" method="POST" action="{{ route('POST /article/{articleId}/comment', $articleId) }}">
+                                    <form id="article_comment_form" role="form" method="POST"
+                                        action="{{ route('POST /article/{articleId}/comment', $articleId) }}"
+                                        onsubmit="return saveComment()">
                                         <div>
                                             <textarea id="article_comment"  name="article_comment" cols="50" rows="20">{{$articleComment}}</textarea>
                                         </div>
                                         <div>
                                             <button id="article_comment_save" type="submit">Save</button>
-                                            <button id="article_comment_cancel" type="reset">Cancel</button>
+                                            <button id="article_comment_cancel" type="reset"
+                                                onclick="return saveCommentIntent()">Cancel</button>
                                         </div>
                                     </form>
 
@@ -104,5 +118,111 @@
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            <!--
+                $(document).ready(function() {
+
+                    saveComment = function()
+                    {
+                        let $form = $('#article_comment_form');;
+                        let $textarea = $form.find('#article_comment');
+
+                        let comment = $textarea.val();
+                        let action = $form.attr('action');
+
+                        $.ajax({
+                            headers: {
+                               Accept: "application/json",
+                               "Content-Type": "application/json"
+                            },
+                            url: action,
+                            method: 'POST',
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                "article_comment": comment
+                            }),
+                            success: showSuccess,
+                            error: function (result) {
+                                showErrors(result.responseJSON);
+                            },
+                            async: false
+                        });
+
+                        return false;
+                    };
+
+                    saveCommentIntent = function()
+                    {
+                        let $form = $('#article_comment_form');;
+                        let $textarea = $form.find('#article_comment');
+
+                        let comment = $textarea.val();
+                        let action = $form.attr('action');
+
+                        $.ajax({
+                            headers: {
+                               Accept: "application/json",
+                               "Content-Type": "application/json"
+                            },
+                            url: action + '/intent',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                "article_comment_size": comment.length
+                            }),
+                            success: clearSuccess,
+                            error: function() {
+                                let $form = $('#article_comment_form');
+                                let $textarea = $form.find('#article_comment');
+
+                                $textarea.val('');
+
+                                clearErrors();
+                            },
+                            async: true
+                        });
+
+                        return false;
+                    };
+
+                    clearSuccess = function()
+                    {
+                        let $form = $('#article_comment_form');
+                        let $textarea = $form.find('#article_comment');
+
+                        $('#success').empty();
+
+                        $textarea.val('');
+
+                        $(document).scrollTop();
+                    };
+
+                    clearErrors = function()
+                    {
+                        $('#errors').empty();
+
+                        $(document).scrollTop();
+                    };
+
+                    showSuccess = function()
+                    {
+                        clearErrors();
+                        clearSuccess();
+
+                        $('#success').text('The comment has been added successfully!');
+                    };
+
+                    showErrors = function(response)
+                    {
+                        clearSuccess();
+
+                        $('#errors').html('<ul><li>' + response.errors[0] + '</li></ul>');
+                    };
+
+                    $(window).on("beforeunload", saveCommentIntent);
+                });
+            //-->
+        </script>
     </body>
 </html>
