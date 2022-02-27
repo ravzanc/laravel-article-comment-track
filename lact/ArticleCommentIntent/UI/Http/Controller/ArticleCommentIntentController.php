@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Lact\ArticleCommentIntent\UI\Http\Controller;
 
 use Exception;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\View\View;
 use Lact\Article\Application\Exception\MissingArticleException;
 use Lact\Article\Application\Service\ArticleServiceInterface;
-use Lact\ArticleCommentIntent\Domain\Repository\ArticleCommentIntentRepositoryInterface;
+use Lact\ArticleCommentIntent\Application\Command\CreateArticleCommentIntentCommand;
 use Lact\ArticleCommentIntent\UI\Http\Request\SaveArticleCommentIntentRequest;
 use Lact\Infrastructure\Http\Response\JsonInternalServerErrorResponse;
 use Lact\Infrastructure\Http\Response\JsonNotFoundResponse;
@@ -22,14 +22,14 @@ class ArticleCommentIntentController extends BaseController
     use ValidatesRequests;
 
     private ArticleServiceInterface $articleService;
-    private ArticleCommentIntentRepositoryInterface$articleCommentIntentRepository;
+    private Dispatcher $dispatcher;
 
     public function __construct(
         ArticleServiceInterface $articleService,
-        ArticleCommentIntentRepositoryInterface$articleCommentIntentRepository
+        Dispatcher$dispatcher
     ) {
         $this->articleService = $articleService;
-        $this->articleCommentIntentRepository =  $articleCommentIntentRepository;
+        $this->dispatcher = $dispatcher;
     }
 
     public function save(SaveArticleCommentIntentRequest $request, int $articleId): JsonResponse
@@ -38,13 +38,18 @@ class ArticleCommentIntentController extends BaseController
             $sessionId = $request->getSessionId();
             $commentContentSize = $request->getArticleCommentSize();
 
-            if ($this->articleCommentIntentRepository->save($articleId, $commentContentSize, $sessionId)) {
-                return new JsonOkResponse(['success' => true, 'errors' => []]);
-            }
+            $command = new CreateArticleCommentIntentCommand(
+                $articleId,
+                $commentContentSize,
+                $sessionId,
+            );
+
+            $this->dispatcher->dispatchNow($command);
+            return new JsonOkResponse(['success' => true, 'errors' => []]);
         } catch (MissingArticleException $exception) {
             return new JsonNotFoundResponse($exception->getMessage());
+        } catch (Exception $exception) {
+            return new JsonInternalServerErrorResponse('An error has occurred ... please retry');
         }
-
-        return new JsonInternalServerErrorResponse('An error has occurred ... please retry');
     }
 }

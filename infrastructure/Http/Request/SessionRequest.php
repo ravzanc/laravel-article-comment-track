@@ -7,7 +7,7 @@ namespace Lact\Infrastructure\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
-class SessionRequest  extends FormRequest
+class SessionRequest extends FormRequest
 {
     public function rules(): array
     {

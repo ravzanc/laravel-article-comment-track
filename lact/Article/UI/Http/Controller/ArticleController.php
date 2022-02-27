@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace  Lact\Article\UI\Http\Controller;
+namespace Lact\Article\UI\Http\Controller;
 
 use Lact\Infrastructure\Http\Response\JsonNotFoundResponse;
 use Illuminate\Http\JsonResponse;
