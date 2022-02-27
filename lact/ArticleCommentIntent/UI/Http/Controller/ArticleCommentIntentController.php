@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lact\ArticleComment\UI\Http\Controller;
+namespace Lact\ArticleCommentIntent\UI\Http\Controller;
 
 use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,46 +11,34 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\View\View;
 use Lact\Article\Application\Exception\MissingArticleException;
 use Lact\Article\Application\Service\ArticleServiceInterface;
-use Lact\ArticleComment\Domain\Repository\ArticleCommentRepositoryInterface;
-use Lact\ArticleComment\UI\Http\Request\SaveArticleCommentRequest;
+use Lact\ArticleCommentIntent\Domain\Repository\ArticleCommentIntentRepositoryInterface;
+use Lact\ArticleCommentIntent\UI\Http\Request\SaveArticleCommentIntentRequest;
 use Lact\Infrastructure\Http\Response\JsonInternalServerErrorResponse;
 use Lact\Infrastructure\Http\Response\JsonNotFoundResponse;
 use Lact\Infrastructure\Http\Response\JsonOkResponse;
 
-class ArticleCommentController extends BaseController
+class ArticleCommentIntentController extends BaseController
 {
     use ValidatesRequests;
 
     private ArticleServiceInterface $articleService;
-    private ArticleCommentRepositoryInterface$articleCommentRepository;
+    private ArticleCommentIntentRepositoryInterface$articleCommentIntentRepository;
 
     public function __construct(
         ArticleServiceInterface $articleService,
-        ArticleCommentRepositoryInterface$articleCommentRepository
+        ArticleCommentIntentRepositoryInterface$articleCommentIntentRepository
     ) {
         $this->articleService = $articleService;
-        $this->articleCommentRepository =  $articleCommentRepository;
+        $this->articleCommentIntentRepository =  $articleCommentIntentRepository;
     }
 
-    public function index(): View
-    {
-        $articleView = $this->articleService->getDefaultArticle();
-
-        return view('lact/article_comment', [
-            'errors' => [],
-            'articleId' => $articleView->getId(),
-            'article' => $articleView->toArray(),
-            'articleComment' => '',
-        ]);
-    }
-
-    public function save(SaveArticleCommentRequest $request, int $articleId): JsonResponse
+    public function save(SaveArticleCommentIntentRequest $request, int $articleId): JsonResponse
     {
         try {
             $sessionId = $request->getSessionId();
-            $commentContent = $request->getArticleCommentContent();
+            $commentContentSize = $request->getArticleCommentSize();
 
-            if ($this->articleCommentRepository->save($articleId, $commentContent, $sessionId)) {
+            if ($this->articleCommentIntentRepository->save($articleId, $commentContentSize, $sessionId)) {
                 return new JsonOkResponse(['success' => true, 'errors' => []]);
             }
         } catch (MissingArticleException $exception) {

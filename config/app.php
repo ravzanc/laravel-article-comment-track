@@ -182,6 +182,7 @@ return [
          */
         Lact\Infrastructure\Article\Provider\ArticleServiceProvider::class,
         Lact\Infrastructure\ArticleComment\Provider\ArticleCommentServiceProvider::class,
+        Lact\Infrastructure\ArticleCommentIntent\Provider\ArticleCommentIntentServiceProvider::class,
 
     ],
 

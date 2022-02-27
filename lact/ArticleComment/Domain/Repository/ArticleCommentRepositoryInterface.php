@@ -6,5 +6,5 @@ namespace Lact\ArticleComment\Domain\Repository;
 
 interface ArticleCommentRepositoryInterface
 {
-    public function save(int $articleId, string $commentContent): bool;
+    public function save(int $articleId, string $commentContent, string $sessionId): bool;
 }

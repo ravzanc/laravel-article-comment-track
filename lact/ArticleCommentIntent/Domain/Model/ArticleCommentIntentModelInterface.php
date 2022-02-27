@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lact\ArticleComment\Domain\Model;
+namespace Lact\ArticleCommentIntent\Domain\Model;
 
 use Lact\Article\Domain\Model\ArticleModelInterface;
 
-interface ArticleCommentModelInterface
+interface ArticleCommentIntentModelInterface
 {
     public function getArticle(): ?ArticleModelInterface;
 
@@ -14,7 +14,7 @@ interface ArticleCommentModelInterface
 
     public function getId(): int;
 
-    public function getContent(): string;
+    public function getContentSize(): int;
 
     public function getSessionId(): string;
 }

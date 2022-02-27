@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Lact\Infrastructure\ArticleComment\Persistence;
+namespace Lact\Infrastructure\ArticleCommentIntent\Persistence;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lact\Article\Domain\Model\ArticleModelInterface;
-use Lact\ArticleComment\Domain\Model\ArticleCommentModelInterface;
+use Lact\ArticleCommentIntent\Domain\Model\ArticleCommentIntentModelInterface;
 use Lact\Infrastructure\Article\Persistence\Article;
 
-class ArticleComment extends Model implements ArticleCommentModelInterface
+class ArticleCommentIntent extends Model implements ArticleCommentIntentModelInterface
 {
     protected $fillable = [
-        'content',
+        'content_size',
         'session_id',
     ];
 
@@ -39,9 +39,9 @@ class ArticleComment extends Model implements ArticleCommentModelInterface
         return $this->id;
     }
 
-    public function getContent(): string
+    public function getContentSize(): int
     {
-        return $this->content;
+        return $this->content_size;
     }
 
     public function getSessionId(): string

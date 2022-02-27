@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('article_comments', function (Blueprint $table) {
+        Schema::create('article_comment_intents', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('article_id')->nullable(false);
-            $table->string('content', 1000);
+            $table->integer('content_size');
 
             $table->string('session_id')->nullable(false);
             $table->timestamps();
@@ -40,6 +40,6 @@ return new class extends Migration
             $table->dropForeign('article_id');
         });
 
-        Schema::dropIfExists('article_comments');
+        Schema::dropIfExists('article_comment_intents');
     }
 };

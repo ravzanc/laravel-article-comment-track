@@ -1,6 +1,6 @@
 <?php
 
-namespace Lact\Infrastructure\Http;
+namespace Lact\Infrastructure\Http\Response;
 
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

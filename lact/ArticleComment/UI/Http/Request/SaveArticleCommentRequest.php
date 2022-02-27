@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Lact\ArticleComment\UI\Http\Request;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Lact\Infrastructure\Http\Request\SessionRequest;
 
-class SaveArticleCommentRequest  extends FormRequest
+class SaveArticleCommentRequest extends SessionRequest
 {
     public function rules(): array
     {
-        return [
+        return parent::rules() + [
             'article_comment' => 'required|string',
         ];
     }

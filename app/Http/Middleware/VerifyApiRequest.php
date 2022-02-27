@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Http\Request;
 
 /**
- * Class ApiRequestMiddleware
+ * Class VerifyApiRequest
  * Validate request's given content type and expected content type
  *
  * @package App\Http\Middleware
  */
-class ApiRequestMiddleware
+class VerifyApiRequest
 {
     use CommonVerification;
 
