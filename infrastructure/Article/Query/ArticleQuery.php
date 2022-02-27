@@ -6,14 +6,14 @@ namespace Lact\Infrastructure\Article\Query;
 
 use Lact\Article\Application\Query\ArticleQueryInterface;
 use Lact\Article\Application\Query\View\ArticleView;
-use Lact\Infrastructure\Article\Factory\ArticleViewFactory;
+use Lact\Article\Domain\Factory\ArticleViewFactoryInterface;
 use Lact\Infrastructure\Article\Persistence\Article;
 
 class ArticleQuery implements ArticleQueryInterface
 {
-    private ArticleViewFactory$articleViewFactory;
+    private ArticleViewFactoryInterface $articleViewFactory;
 
-    public function __construct(ArticleViewFactory $articleViewFactory)
+    public function __construct(ArticleViewFactoryInterface $articleViewFactory)
     {
         $this->articleViewFactory = $articleViewFactory;
     }
@@ -22,7 +22,7 @@ class ArticleQuery implements ArticleQueryInterface
     {
         $article = Article::query()->find($id);
         if ($article instanceof Article) {
-            return $this->articleViewFactory->create($article);
+            return $this->articleViewFactory->createView($article);
         }
 
         return null;

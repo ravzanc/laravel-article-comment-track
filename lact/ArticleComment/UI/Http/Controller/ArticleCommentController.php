@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lact\ArticleComment\UI\Http\Controller;
 
-use Exception;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;

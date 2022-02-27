@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Lact\Article\Domain\Model\ArticleModelInterface;
 use Lact\Infrastructure\ArticleComment\Persistence\ArticleComment;
+use Lact\Infrastructure\ArticleCommentIntent\Persistence\ArticleCommentIntent;
 
 class Article extends Model implements ArticleModelInterface
 {
@@ -20,12 +21,22 @@ class Article extends Model implements ArticleModelInterface
 
     public function comments(): HasMany
     {
-        return $this->hasMany(ArticleComment::class, 'id');
+        return $this->hasMany(ArticleComment::class, 'article_id');
     }
 
     public function getComments(): ?Collection
     {
         return $this->comments;
+    }
+
+    public function intents(): HasMany
+    {
+        return $this->hasMany(ArticleCommentIntent::class, 'article_id');
+    }
+
+    public function getIntents(): ?Collection
+    {
+        return $this->intents;
     }
 
     public function getId(): int

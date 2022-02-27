@@ -19,6 +19,8 @@
   * {"article_comment": "string""}
 * POST http://localhost:8000/api/article/1/comment/intent
     * {"article_comment_size": "integer""}
+* GET http://localhost:8000/api/article/comment/track
+* GET http://localhost:8000/api/article/comment/track/session
 
 # Usage
 * go to http://localhost:8000

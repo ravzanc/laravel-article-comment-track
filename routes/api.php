@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Lact\Article\UI\Http\Controller\ArticleController;
 use Lact\ArticleComment\UI\Http\Controller\ArticleCommentController;
 use Lact\ArticleCommentIntent\UI\Http\Controller\ArticleCommentIntentController;
+use Lact\ArticleCommentTrack\UI\Http\Controller\ArticleCommentTrackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,9 @@ Route::post('/article/{articleId}/comment', [ArticleCommentController::class, 's
 Route::post('/article/{articleId}/comment/intent', [ArticleCommentIntentController::class, 'save'])
     ->middleware('session.fingerprint')
     ->name('POST /article/{articleId}/comment/intent');
+
+Route::get('/article/comment/track', [ArticleCommentTrackController::class, 'getByArticles'])
+    ->name('GET /article/comment/track');
+
+Route::get('/article/comment/track/session', [ArticleCommentTrackController::class, 'getBySessions'])
+    ->name('GET /article/comment/track/session');

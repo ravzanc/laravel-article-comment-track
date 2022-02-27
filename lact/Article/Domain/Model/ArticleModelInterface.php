@@ -10,6 +10,8 @@ interface ArticleModelInterface
 {
     public function getComments(): ?Collection;
 
+    public function getIntents(): ?Collection;
+
     public function getId(): int;
 
     public function getTitle(): string;

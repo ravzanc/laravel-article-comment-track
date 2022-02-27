@@ -6,6 +6,7 @@ namespace Lact\ArticleCommentIntent\UI\Http\Controller;
 
 use Exception;
 use Illuminate\Bus\Dispatcher;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
@@ -19,7 +20,7 @@ use Lact\Infrastructure\Http\Response\JsonOkResponse;
 
 class ArticleCommentIntentController extends BaseController
 {
-    use ValidatesRequests;
+    use DispatchesJobs, ValidatesRequests;
 
     private ArticleServiceInterface $articleService;
     private Dispatcher $dispatcher;
