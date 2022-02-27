@@ -177,6 +177,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Domain driven design providers
+         */
+        Lact\Infrastructure\Article\Provider\ArticleServiceProvider::class,
+
     ],
 
     /*

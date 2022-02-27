@@ -1,22 +1,23 @@
 version: "3"
 
 volumes:
-  postgres-data:
+  mysql-data:
     driver: local
 
 services:
   db:
-    image: postgres:12.5-alpine
+    image: mysql:5.7
     container_name: lact_db_1
     ports:
-      - "5442:5432"
+      - "3316:3306"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - /tmp:/tmp
-    shm_size: 1g
+      - mysql-data:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/1-dump.sql
     environment:
-      POSTGRES_DB: lact-db
-      POSTGRES_HOST_AUTH_METHOD: trust
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: lact-db
+      MYSQL_USER: lact_user
+      MYSQL_PASSWORD: lact_passwd
 
   nginx:
     image: nginx:stable-alpine
@@ -32,8 +33,12 @@ services:
       - 8000:80
 
   phpfpm:
-    image: php:8.1.1-fpm-alpine
+    build:
+      context: .
+      dockerfile: php/Dockerfile
     container_name: lact_phpfpm_1
+    links:
+      - db
     depends_on:
       - db
     env_file:
@@ -44,8 +49,9 @@ services:
     working_dir: /app
     user: $UID:$GID
     environment:
-      - "DB_PORT=5432"
+      - "DB_CONNECTION=mysql"
       - "DB_HOST=db"
-      - "DB_USERNAME=postgres"
-      - "DB_DATABASE=main-db"
-      - "COMPOSER_MEMORY_LIMIT=-1"
+      - "DB_PORT=3306"
+      - "DB_DATABASE=lact-db"
+      - "DB_USERNAME=lact_user"
+      - "DB_PASSWORD=lact_passwd"

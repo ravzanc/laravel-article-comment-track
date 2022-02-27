@@ -5,6 +5,7 @@ Available commands:
 ${LBLUE}start${NC} - run the project
 ${LBLUE}stop${NC} - stop all project's containers
 ${LBLUE}composer${NC} - run composer commands
+${LBLUE}artisan${NC} - run artisan commands
 "
 
 action=$1
@@ -22,6 +23,9 @@ case "$action" in
  composer )
     shift
     eval "docker exec -it lact_phpfpm_1 php composer.phar ${@}" ;;
+ artisan )
+    shift
+    eval "docker exec -it lact_phpfpm_1 php artisan ${@}" ;;
   * )
     echo "${help}" ;;
 esac
