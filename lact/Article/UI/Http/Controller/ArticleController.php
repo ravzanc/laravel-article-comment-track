@@ -9,8 +9,9 @@ use Illuminate\Http\JsonResponse;
 use Lact\Article\Application\Query\ArticleQueryInterface;
 use Lact\Article\Application\Query\View\ArticleView;
 use Lact\Infrastructure\Http\JsonOkResponse;
+use Illuminate\Routing\Controller as BaseController;
 
-class ArticleController
+class ArticleController extends BaseController
 {
     private ArticleQueryInterface $articleQuery;
 

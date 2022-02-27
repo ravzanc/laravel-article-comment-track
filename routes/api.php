@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Lact\Article\UI\Http\Controller\ArticleController;
+use Lact\ArticleComment\UI\Http\Controller\ArticleCommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use Lact\Article\UI\Http\Controller\ArticleController;
 
 Route::get('/article/{articleId}', [ArticleController::class, 'get'])
     ->name('GET /article/{articleId}');
+
+Route::post('/article/{articleId}/comment', [ArticleCommentController::class, 'save'])
+    ->name('POST /article/{articleId}/comment');

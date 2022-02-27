@@ -181,6 +181,7 @@ return [
          * Domain driven design providers
          */
         Lact\Infrastructure\Article\Provider\ArticleServiceProvider::class,
+        Lact\Infrastructure\ArticleComment\Provider\ArticleCommentServiceProvider::class,
 
     ],
 

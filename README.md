@@ -11,9 +11,12 @@
 # Migrations
 * 2022_02_27_022538_create_articles_table.php
 * 2022_02_27_042736_add_dummy_articles_to_articles_table.php
+* 2022_02_27_082413_create_article_comments_table.php
 
 # Endpoints
 * GET http://localhost:8000/api/article/1
+* POST http://localhost:8000/api/article/1/comment
+  * {"article_comment": "string""}
 
 # Usage
 * go to http://localhost:8000
