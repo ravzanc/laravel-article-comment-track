@@ -6,12 +6,12 @@ namespace Lact\ArticleCommentTrack\Application\Query\View;
 
 class ArticleCommentTrackView
 {
-    private int $id;
+    private string $id;
     private string $name;
     private int $comments;
     private int $intents;
 
-    public function __construct(int $id, string $name, int $comments, int $intents)
+    public function __construct(string $id, string $name, int $comments, int $intents)
     {
         $this->id = $id;
         $this->name = $name;
@@ -19,7 +19,7 @@ class ArticleCommentTrackView
         $this->intents = $intents;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
