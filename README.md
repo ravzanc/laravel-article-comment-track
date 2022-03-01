@@ -29,3 +29,7 @@
 * run `./app.sh composer test`
 
 # Comments`
+* The User Interface part of this application is not at full potential as not being in the specific specs,
+but some tweaks for triggering the `api/article/1/comment/intent` endpoint can be further applied by:
+  * using the `beforeUnload` event
+  * using the Beacon API
