@@ -1,4 +1,4 @@
-<?php
+<?php /** @author Razvan CORNEA  (2022-03-01) */
 
 declare(strict_types=1);
 
