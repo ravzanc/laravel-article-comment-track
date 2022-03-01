@@ -42,7 +42,7 @@ class ArticleCommentTrackQuery implements ArticleCommentTrackQueryInterface
         $collection = new ArticleCommentTrackViewCollection();
 
         $query = 'select session_id as id, title, sum(comments) as comments, sum(intents) as intents from (
-                	(select session_id, a.title, count(*) as comments, 0 as intents  from article_comments ac
+                	(select session_id, a.title, count(*) as comments, 0 as intents from article_comments ac
                     left join articles a on ac.article_id = a.id
                     group by 1,2)
                     UNION ALL
