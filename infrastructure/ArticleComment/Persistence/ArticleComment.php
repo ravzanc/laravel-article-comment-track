@@ -27,9 +27,9 @@ class ArticleComment extends Model implements ArticleCommentModelInterface
         return $this->article;
     }
 
-    public function setArticle(?ArticleModelInterface $user): self
+    public function setArticle(?ArticleModelInterface $article): self
     {
-        $this->article()->associate($user);
+        $this->article()->associate($article);
 
         return $this;
     }

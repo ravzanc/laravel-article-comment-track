@@ -33,7 +33,7 @@ class ArticleCommentController extends BaseController
 
     public function index(): View
     {
-        $articleView = $this->articleService->getDefaultArticle();
+        $articleView = $this->articleService->getDefaultArticleView();
 
         return view('lact/article_comment', [
             'errors' => [],

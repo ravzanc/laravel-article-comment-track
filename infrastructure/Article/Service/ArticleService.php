@@ -17,7 +17,7 @@ class ArticleService implements ArticleServiceInterface
         $this->articleQuery = $articleQuery;
     }
 
-    public function getDefaultArticle(): ArticleView
+    public function getDefaultArticleView(): ArticleView
     {
         $articleId = config('lact.default_article_id');
 

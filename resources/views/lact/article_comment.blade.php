@@ -217,7 +217,7 @@
                     {
                         clearSuccess();
 
-                        $('#errors').html('<ul><li>' + response.errors[0] + '</li></ul>');
+                        $('#errors').html('<ul><li>' + Object.values(response.errors)[0][0] + '</li></ul>');
                     };
 
                     $(window).on("beforeunload", saveCommentIntent);

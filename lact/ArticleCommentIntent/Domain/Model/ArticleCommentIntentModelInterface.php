@@ -10,7 +10,7 @@ interface ArticleCommentIntentModelInterface
 {
     public function getArticle(): ?ArticleModelInterface;
 
-    public function setArticle(?ArticleModelInterface $user): self;
+    public function setArticle(?ArticleModelInterface $article): self;
 
     public function getId(): int;
 

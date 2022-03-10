@@ -8,5 +8,5 @@ use Lact\Article\Application\Query\View\ArticleView;
 
 interface ArticleServiceInterface
 {
-    public function getDefaultArticle(): ArticleView;
+    public function getDefaultArticleView(): ArticleView;
 }
