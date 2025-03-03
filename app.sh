@@ -17,9 +17,9 @@ export GID=$(id -g)
 
 case "$action" in
   start )
-    eval "docker-compose up -d" ;;
+    eval "docker compose up -d" ;;
   stop )
-    eval "docker-compose stop" ;;
+    eval "docker compose stop" ;;
  composer )
     shift
     eval "docker exec -it lact_phpfpm_1 php composer.phar ${@}" ;;
